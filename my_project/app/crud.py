@@ -50,3 +50,14 @@ def delete_todo(todo_id: int):
             todos.pop(index)
             return {"message": "Data Deleted"}
     return {"error": "Todo not found"}
+
+
+@router.get("/active/{todo_id}")
+def get_active_todos(todo_id: int, notify: bool = False):
+    for todo in todos:
+        if todo.id == todo_id:
+            if todo.completed:
+                return {"data": todo}
+            return {"error": "Todo is not completed"}
+
+    return {"error": "Todo not found"}

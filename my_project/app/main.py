@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from app.crud import router
+from app.crud import router as crud_router
+from app.error_handling import router as error_router
 
 app = FastAPI()
 
-app.include_router(router)
+app.include_router(crud_router)
+app.include_router(error_router)
 
 
 @app.get("/")

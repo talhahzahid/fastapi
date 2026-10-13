@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, status
 from pydantic import BaseModel
 
 router = APIRouter()
@@ -61,3 +61,28 @@ def get_active_todos(todo_id: int, notify: bool = False):
             return {"error": "Todo is not completed"}
 
     return {"error": "Todo not found"}
+
+
+# response model
+class User(BaseModel):
+    name: str
+    age: int
+    password: str
+
+
+class UserResponse(BaseModel):
+    name: str
+    age: int
+
+
+@router.get("/get-users", response_model=UserResponse)
+def get_users():
+    return {"name": "talha", "age": 21, "password": "123"}
+
+
+# status code and response custome response & error handling basic
+
+
+@router.post("/create_user", status_code=status.HTTP_201_CREATED)
+def create_user():
+    return {"message": "User Created"}
